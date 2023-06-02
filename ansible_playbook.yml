@@ -1,0 +1,25 @@
+---
+- name: Install Firefox and Copy files
+  hosts: all
+  become: yes
+
+
+  vars:
+    source_file: ~/your_path_to/file
+    destin_path: ~/your_path_to_copy
+
+
+  tasks:
+
+  - name: Install Firefox
+    apt:
+      name: firefox
+      state: latest
+    when: ansible_os_family == 'Debian'
+
+  - name: Install Firefox
+    yum: name=firefox state=latest
+    when: ansible_os_family == 'RedHat'
+
+  - name: Copy file to your dir
+    copy: src={{ source_file }} dest={{ destin_path }} mode=0555
