@@ -9,7 +9,6 @@
 
 
   tasks:
-
   - block: # RedHat
       - name: Install Firefox
         yum: name=firefox state=latest
