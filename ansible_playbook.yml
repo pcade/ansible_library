@@ -3,7 +3,7 @@
   hosts: all
   become: yes
 
-
+123456
   vars:
     source_file: ~/your_path_to/file
     destin_path: ~/your_path_to_copy
