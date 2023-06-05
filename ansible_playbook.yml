@@ -11,15 +11,37 @@
 
   tasks:
 
-  - name: Install Firefox
-    apt:
-      name: firefox
-      state: latest
+  - block: # RedHat
+      - name: Install Firefox
+        yum: name=firefox state=latest
+
+      - name: Say hello for all
+        debug: msg="Hello {{ item }}"
+        loop:
+          - "G"
+          - "r"
+          - "i"
+          - "s"
+          - "h"
+          - "a"
+    when: ansible_os_family == 'RedHat'
+
+
+  - block: # Debian
+      - name: Install Firefox
+        apt:
+          name: firefox
+          state: latest
+
+      - name: Loop Until example
+        shell: echo -n 'G' >> G.txt && cat G.txt
+        register: output
+        delay: 2
+        retries: 10
+        until: output.stdout.find('GGGGG') == false 
+
     when: ansible_os_family == 'Debian'
 
-  - name: Install Firefox
-    yum: name=firefox state=latest
-    when: ansible_os_family == 'RedHat'
 
   - name: Copy file to your dir
     copy: src={{ source_file }} dest={{ destin_path }} mode=0555
