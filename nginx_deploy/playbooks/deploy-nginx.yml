@@ -1,0 +1,30 @@
+---
+- name: Deploy Nginx across different OS
+  hosts: webservers
+  become: yes
+  vars:
+     nginx_user: "{{ 'www-data' if ansible_os_family == 'Debian' else 'nginx' }}"
+  
+  roles:
+    - role: ../roles/nginx
+      tags: nginx
+
+
+#---
+#- hosts: webserver
+#  become: yes  # Для выполнения задач с привилегиями sudo
+#  tasks:
+#    - name: Install EPEL (RedHat/CentOS)
+#      yum:
+#        name: epel-release
+#        state: present
+#      when: ansible_os_family == "RedHat"
+#
+#    - name: Create test.log file
+#      ansible.builtin.file:
+#        path: /home/u/test.log
+#        state: touch
+#        mode: '0644'
+#        owner: u
+#        group: u
+#      when: ansible_os_family == "Debian"

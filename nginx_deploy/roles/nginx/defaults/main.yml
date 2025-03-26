@@ -1,0 +1,10 @@
+---
+nginx_package: "nginx"
+
+nginx_port: 80
+
+nginx_user: "user-www"
+
+#(для RedHat)
+nginx_modules:
+  - nginx-mod-http-headers-more
